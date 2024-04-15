@@ -10,6 +10,12 @@ fibonacci n = fibonacci (n - 1) + fibonacci (n - 2)
 parteEntera :: Float -> Int
 parteEntera x = truncate x
 
+parteEntera1 :: Float -> Int
+parteEntera1 x | 0 <= x && x <= 1 = 0
+               | x >= 1 = parteEntera (x - 1) + 1
+               | otherwise = parteEntera (x + 1) - 1
+
+
 -- EJERCICIO 3 No usar ni mod ni div
 
 esDivisible :: Int -> Int -> Bool
@@ -53,3 +59,37 @@ cantidadDeDigitos n | n < 10 = 1
 
 iesimoDigito :: Int -> Int -> Int
 iesimoDigito n i = mod (div n (10^(cantidadDeDigitos (n) - i))) 10
+
+-- EJERCICIO 9 
+
+esCapicua :: Int -> Bool
+esCapicua n = n == inverso n
+
+inverso :: Int -> Int
+inverso = read . reverse . show 
+
+-- EJERCICIO 10 sumatorias
+
+f1 :: Int -> Int
+f1 0 = 1
+f1 n = 2^n + f1 (n-1)
+
+f2 :: Int -> Int -> Int
+f2 1 q = q
+f2 n q = q^n + f2 (n -1) q
+
+f3 :: Int -> Int -> Int
+f3 n q | n == 1 = q + q^2
+       | otherwise = q^(2*n) + q^(2*n - 1) + f3 (n - 1) q 
+
+-- falta f4
+
+eaprox :: Int -> Float
+eaprox 
+
+factorial :: Int -> Int
+factorial 0 = 1
+factorial 1 = 1 
+factorial n 
+
+
