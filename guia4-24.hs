@@ -66,7 +66,7 @@ esCapicua :: Int -> Bool
 esCapicua n = n == inverso n
 
 inverso :: Int -> Int
-inverso = read . reverse . show 
+inverso = read . reverse . show --(no se puede hacer así)
 
 -- EJERCICIO 10 sumatorias
 
@@ -84,12 +84,76 @@ f3 n q | n == 1 = q + q^2
 
 -- falta f4
 
+-- EJERCICIO 11
+
 eaprox :: Int -> Float
-eaprox 
+eaprox 0 = 1
+eaprox 1 = 1
+eaprox n = 1/(fromIntegral (factorial n)) + eaprox (n - 1)
 
 factorial :: Int -> Int
 factorial 0 = 1
 factorial 1 = 1 
-factorial n 
+factorial n = n * (factorial (n - 1))
 
 
+-- EJERCICIO 12
+
+sucesion :: Int -> Float
+sucesion 0 = 1
+sucesion 1 = 2
+sucesion n = 2 + 1/(fromIntegral(n - 1)) + sucesion (n - 1)
+
+raizDosAprox :: Int -> Float
+raizDosAprox n = sucesion (n - 1)
+
+-- EJERCICIO 13
+
+sumatoriaExt :: Int -> Int -> Int
+sumatoriaExt 1 m = 1
+sumatoriaExt n m = sumatoriaInterna n m + sumatoriaExt (n - 1) m
+
+sumatoriaInterna :: Int -> Int -> Int
+sumatoriaInterna n 1 = n
+sumatoriaInterna n j = n ^ j + sumatoriaInterna n (j -1)
+
+-- EJERCICIO 14
+
+sumaPotencias :: Int -> Int -> Int -> Int
+sumaPotencias q n m | n == 1 = q ^ (1 + m) + sumaPotenciasAux q n m
+                    | otherwise = sumaPotenciasAux q n m + sumaPotencias q (n - 1) m
+
+sumaPotenciasAux :: Int -> Int -> Int -> Int
+sumaPotenciasAux q n m | m == 1 = q  ^ (n + 1)
+                       | otherwise = q  ^ (n + m) + sumaPotenciasAux q n (m - 1)
+
+
+-- EJERCICIO 15
+
+sumaRacionales :: Int -> Int -> Float
+sumaRacionales n m | m == 1 = fromIntegral(n) + sumaRacionalesAux (n - 1) m 
+                   | otherwise = sumaRacionales n (m - 1) + sumaRacionalesAux n m 
+
+sumaRacionalesAux :: Int -> Int -> Float
+sumaRacionalesAux n m | n == 1 = (fromIntegral n)/(fromIntegral m)
+                      | otherwise = (fromIntegral n)/(fromIntegral m) + sumaRacionalesAux (n - 1) m
+                   
+
+
+--  EJERCICIO 16 
+
+menorDivisor :: Int -> Int
+menorDivisor n = menorDivisorDesde n 2
+
+menorDivisorDesde :: Int -> Int -> Int
+menorDivisorDesde n desde | mod n desde == 0 = desde
+                          | otherwise = menorDivisorDesde n (desde + 1)
+
+
+esPrimo :: Int -> Bool
+esPrimo n = menorDivisor n == n
+
+
+sonCoprimos :: Int -> Int -> Bool -- si tienen un divisor común mayor a 1
+sonCoprimos n m | esPrimo n || esPrimo m = False 
+                | mod m menorDivisor(n) == 0 || mod m menorDivisor(n) == 0 = True
