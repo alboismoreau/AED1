@@ -62,11 +62,29 @@ iesimoDigito n i = mod (div n (10^(cantidadDeDigitos (n) - i))) 10
 
 -- EJERCICIO 9 
 
-esCapicua :: Int -> Bool
-esCapicua n = n == inverso n
+esCapicua' :: Int -> Bool
+esCapicua' n = n == inverso n
 
 inverso :: Int -> Int
 inverso = read . reverse . show --(no se puede hacer así)
+-------------------------
+
+sinPrimeroYultimo :: Int -> Int
+sinPrimeroYultimo x = mod (mod x (10^(cantidadDeDigitos x -1))) 10
+
+esCapicua :: Int -> Bool
+esCapicua n | n < 10 = True
+            | ultimoDigito n == iesimoDigito n 1 = esCapicua (sinPrimeroYultimo n)
+            | otherwise = False
+
+---------------------------------------
+anteUltimoDigito :: Int -> Int
+anteUltimoDigito n = mod (div n 10) 10
+
+ultimoDigito :: Int -> Int
+ultimoDigito n = mod n 10
+
+
 
 -- EJERCICIO 10 sumatorias
 
@@ -155,5 +173,69 @@ esPrimo n = menorDivisor n == n
 
 
 sonCoprimos :: Int -> Int -> Bool -- si tienen un divisor común mayor a 1
-sonCoprimos n m | esPrimo n || esPrimo m = False 
-                | mod m menorDivisor(n) == 0 || mod m menorDivisor(n) == 0 = True
+sonCoprimos n m | esPrimo n || esPrimo m = True 
+                | n >= m && mod n (menorDivisor m) == 0 = False
+                | n < m && mod m (menorDivisor n) == 0 = False
+                | otherwise = True
+
+
+nesimoPrimo :: Int -> Int
+nesimoPrimo 1 = 2
+nesimoPrimo n = siguientePrimo (nesimoPrimo (n-1) + 1)
+
+siguientePrimo :: Int -> Int
+siguientePrimo n | esPrimo n = n 
+                 | otherwise = siguientePrimo (n + 1)
+
+
+-- EJERCICIO 17
+
+
+
+
+
+
+-- EJERCICIO 18
+
+mayorDigitoPar :: Int -> Int
+mayorDigitoPar x | x < 10 && esInpar x = -1
+                 | x < 10 && esPar x = x
+                 | esPar (ultimoDigito x) = (mayor (mayorDigitoPar (div x 10)) (ultimoDigito x))
+                 | otherwise = (mayorDigitoPar (div x 10))
+
+mayor :: Int -> Int -> Int
+mayor x y | x > y = x
+          | otherwise = y
+
+esInpar :: Int -> Bool
+esInpar x = mod x 2 == 1 
+
+
+esPar :: Int -> Bool
+esPar x = mod x 2 == 0 
+
+-- EJERCICIO 19
+
+esSumaInicialDePrimos :: Int -> Bool
+esSumaInicialDePrimos x = (esSumaInicialDePrimosAux x 2)
+ 
+esSumaInicialDePrimosAux :: Int -> Int -> Bool
+esSumaInicialDePrimosAux x y | y > x = False
+                             | x - y == 0 = True
+                             | otherwise = esSumaInicialDePrimosAux (x-y) (primoCercanoMasGrande (y+1))
+ 
+
+primoCercanoMasGrande :: Int -> Int 
+primoCercanoMasGrande x | esPrimo x = x
+                        | otherwise = primoCercanoMasGrande (x+1) 
+
+-- EJERCICIO 21
+
+pitagorasBool :: Int -> Int -> Int -> Bool
+pitagorasBool x y z = (x*x + y*y) <= z*z
+
+
+pitagorasXfijo :: Int -> Int -> Int -> Int
+pitagorasXfijo x y z | y < 0 = 0
+                     | pitagorasBool x y z = 1 + pitagorasXfijo x (y-1) z
+                     | otherwise = 0 + pitagorasXfijo x (y-1) z
