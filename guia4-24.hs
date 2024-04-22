@@ -190,9 +190,19 @@ siguientePrimo n | esPrimo n = n
 
 -- EJERCICIO 17
 
+esFibonacciAux2 :: Int -> Int -> Bool
+esFibonacciAux2 n i | i < 0 = False
+                    | n == fibonacci i = True
+                    | otherwise = esFibonacciAux2 n (i - 1)
 
+esFibonacciAux1 :: Int -> Int -> Bool
+esFibonacciAux1 n i | i > 10 = False -- no se puede si n es mayor a fibo(10)
+                    | n == fibonacci i = True
+                    | otherwise = esFibonacciAux1 n (i + 1)
 
-
+esFibonacci :: Int -> Bool
+esFibonacci n | n <= 5 = esFibonacciAux2 n 5
+              | otherwise = esFibonacciAux1 n 6
 
 
 -- EJERCICIO 18
