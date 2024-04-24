@@ -57,12 +57,14 @@ eliminarRepetidos [x] = [x]
 eliminarRepetidos (x:xs) | pertenece x xs = eliminarRepetidos xs
                          | otherwise = eliminarRepetidos [x] ++ eliminarRepetidos xs
 
+
 mismosElementos :: (Eq t) => [t] -> [t] -> Bool
-mismosElementos [] [] = True
-mismosElementos [] [x] = True
-mismosElementos [x] l = pertenece x l 
-mismosElementos l s | pertenece (head(eliminarRepetidos s)) l = mismosElementos (tail s) l && mismosElementos s l
-                    | otherwise = False -- ARREGLAR
+mismosElementos l s = mismosElementosAux  l s && mismosElementosAux s l
+
+mismosElementosAux :: (Eq t) => [t] -> [t] -> Bool
+mismosElementosAux [] [] = True
+mismosElementosAux l s = pertenece (head s) l && mismosElementosAux (tail s) l 
+--la idea está bien pero hay algo mal pensado en los casos bases que hace que no funcione
 
 capicua :: (Eq t) => [t] -> Bool
 capicua l = reverso l == l
@@ -117,6 +119,7 @@ ordenar (x:xs) | x == maximo (x:xs) = ordenar xs ++ [x]
 
 sacarBlancosRepetidos :: [Char] -> [Char]
 sacarBlancosRepetidos [] = []
+sacarBlancosRepetidos [x] = [x]
 sacarBlancosRepetidos (x:y:xs) | x == y && x == ' ' = sacarBlancosRepetidos (y:xs)
                                | otherwise = x : (sacarBlancosRepetidos (y:xs))
 
@@ -138,4 +141,67 @@ contarBlancos (x:xs) | x == ' ' = 1 + contarBlancos xs
 contarPalabras :: [Char] -> Int
 contarPalabras l = (contarBlancos l) + 1
 
+
+primeraPalabra :: [Char] -> [Char]
+primeraPalabra [] = []
+primeraPalabra (x:xs) | x == ' ' = []
+                      | otherwise = x : (primeraPalabra xs)
+
+sacarPrimeraPalabra :: [Char] -> [Char]
+sacarPrimeraPalabra [] = []
+sacarPrimeraPalabra (x:xs) | x == ' ' = xs
+                           | otherwise = sacarPrimeraPalabra xs
+
+
 palabras :: [Char] -> [[Char]]
+palabras [] = []
+palabras l = (primeraPalabra ( eliminaBlancosIniFinal ( sacarBlancosRepetidos l))):(palabras (sacarPrimeraPalabra l))
+
+
+palabraMasLarga :: [Char] -> [Char]
+palabraMasLarga xs = palabraMasLargaAux (eliminaBlancosIniFinal (sacarBlancosRepetidos xs))
+
+palabraMasLargaAux :: [Char] -> [Char]
+palabraMasLargaAux xs | sacarPrimeraPalabra xs == [] = primeraPalabra xs
+                      | length (primeraPalabra xs) > length (palabraMasLargaAux (sacarPrimeraPalabra xs)) = primeraPalabra xs
+                      | otherwise = palabraMasLargaAux (sacarPrimeraPalabra xs) 
+
+aplanarConBlancos :: [[Char]] -> [Char]
+aplanarConBlancos [] = []
+aplanarConBlancos [[x]] = [x]
+aplanarConBlancos (x:xs) = eliminaBlancosIniFinal( x ++ [' '] ++ aplanarConBlancos xs)
+
+aplanarConNBlancos :: [[Char]] -> Int -> [Char]
+aplanarConNBlancos [] _ = []
+aplanarConNBlancos [[x]] _ = [x]
+aplanarConNBlancos (x:xs) n = eliminaBlancosIniFinal( x ++ nBlancos n ++ aplanarConBlancos xs)
+
+nBlancos :: Int -> [Char]
+nBlancos 0 = []
+nBlancos n = [' '] ++ nBlancos (n - 1)
+
+-- EJERCICIO 5 
+
+sumaAcumulada :: (Num t) => [t] -> [t]
+sumaAcumulada [] = []
+sumaAcumulada [x] = [x]
+sumaAcumulada l = sumaAcumulada (principio l) ++ [sumaTodos l]
+
+sumaTodos :: (Num t) => [t] -> t
+sumaTodos [] = 0
+sumaTodos (x:xs) = x + sumaTodos xs
+
+descomponerEnPrimos :: [Int] -> [[Int]] --Por ejemplo descomponerEnPrimos [2, 10, 6] es [[2], [2, 5], [2, 3]]
+descomponerEnPrimos [] = []
+descomponerEnPrimos (x:xs) = descomponerElemento x : descomponerEnPrimos xs
+
+descomponerElemento :: Int -> [Int]
+descomponerElemento x | x == 1 = []
+                      | otherwise = menorDivisor x : descomponerElemento (div x (menorDivisor x)) 
+
+menorDivisor :: Int -> Int
+menorDivisor n = menorDivisorDesde n 2 
+
+menorDivisorDesde :: Int -> Int -> Int
+menorDivisorDesde n desde | mod n desde == 0 = desde
+                          | otherwise = menorDivisorDesde n (desde + 1)
