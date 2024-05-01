@@ -1,4 +1,4 @@
-module Simulacro where
+module Simulacro1 where
 
 
 --EJERCICIO 1----------------------------------------------------------------------------
