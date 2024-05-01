@@ -1,3 +1,51 @@
+{-
+
+Ejercicio 1 - Votos en Blanco
+problema votosEnBlanco(f ormulas : seq < String × String >, votos : seq < Z >, cantT otalV otos : Z) : Z{
+requiere : {f ormulasV alidas(f ormulas)}
+requiere : {|f ormulas| = |votos|}
+requiere : { Todos los elementos de votos son mayores o iguales que 0}
+requiere : { La suma de todos los elementos de votos es menor o igual a cantT otalV otos}
+asegura : {res es la cantidad de votos emitidos que no correspondieron a niguna de las fórmulas que se presentaron }
+}
+
+
+Ejercicio 2 - Fórmulas Válidas
+problema formulasValidas(f ormulas : seq < String × String >) : Bool{
+requiere : {T rue}
+asegura : {(res = true) ↔ f ormulas no contiene nombres repetidos, es decir que cada candidato está en una única fórmula (no
+se puede ser candidato a presidente y a vicepresidente ni en la misma fórmula ni en fórmulas distintas) }
+}
+
+
+Ejercicio 3 - Porcentaje de Votos
+problema porcentajeDeVotos(presidente : String, f ormulas : seq < String × String >, votos : seq < Z >) : R{
+requiere : {La primera componente de algun elemento de f ormulas es presidente}
+requiere : {f ormulasV alidas(f ormulas)}
+requiere : {|f ormulas| = |votos|}
+requiere : { Todos los elementos de votos son mayores o iguales que 0}
+requiere : { Hay al menos un elemento de votos que es mayor estricto que 0}
+asegura : {res es el porcentaje de votos que obtuvo la fórmula encabezada por presidente sobre el total de votos afirmativos }
+}
+Para resolver este ejercicio pueden utilizar la siguiente función que devuelve como Float la división entre dos números de tipo
+Int:
+division :: Int → Int → F loat
+division a b = (f romIntegral a) / (f romIntegral b)
+
+
+Ejercicio 4 - Próximo Presidente
+problema proximoPresidente(f ormulas : seq < String × String >, votos : seq < Z >) : String{
+requiere : {La primera componente de algun elemento de f ormulas es presidente}
+requiere : {f ormulasV alidas(f ormulas)}
+requiere : {|f ormulas| = |votos|}
+requiere : { Todos los elementos de votos son mayores o iguales que 0}
+requiere : { Hay al menos un elemento de votos que es mayor estricto que 0}
+requiere : {|f ormulas| > 0}
+asegura : {res es el candidato a presidente de f ormulas más votado de acuerdo a los votos contabilizados en votos}
+}
+-}
+
+
 module Parcial1 where
     
 -- EJERCICIO 1-----------------------------------------------
