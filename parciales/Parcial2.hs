@@ -54,7 +54,7 @@ problema vallaMenosVencida (arquerosPorEquipo: seq<String X String>, goles: seq<
 -}
 
 
-module Parcial2 where
+module Parcia2 where
 
 -- EJERCICIO 1---------------------------------------
 
