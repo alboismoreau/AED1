@@ -1,4 +1,4 @@
-import Simulacro
+import Simulacro1
 import Test.HUnit
 
 masAmigos = test [
