@@ -63,10 +63,13 @@ cantidadApariciones c (x:xs) | c == x = 1 + cantidadApariciones c xs
 --EJERCICIO 3------------------------------------------------------------
 
 laQueMasHayQueCodificar :: [Char] -> [(Char,Char)] -> Char
-laQueMasHayQueCodificar [x] mapeo = x
-laQueMasHayQueCodificar (x:y:xs) mapeo | cuantasVecesHayQueCodificar x (x:y:xs) mapeo >= cuantasVecesHayQueCodificar y (x:y:xs) mapeo = laQueMasHayQueCodificar (x:xs) mapeo
-                                       | otherwise = laQueMasHayQueCodificar (y:xs) mapeo
+laQueMasHayQueCodificar frase mapeo = laQueMasHayQueCodificarAux frase frase mapeo
 
+
+laQueMasHayQueCodificarAux :: [Char] -> [Char] -> [(Char,Char)] -> Char
+laQueMasHayQueCodificarAux [x] _ _ = x
+laQueMasHayQueCodificarAux (x:y:xs) frase mapeo | cuantasVecesHayQueCodificar x frase mapeo >= cuantasVecesHayQueCodificar y frase mapeo = laQueMasHayQueCodificarAux (x:xs) frase mapeo
+                                                | otherwise = laQueMasHayQueCodificarAux (y:xs) frase mapeo
 
 --EJERCICIO 4------------------------------------------------------------
 
