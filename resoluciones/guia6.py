@@ -66,16 +66,101 @@ def es_bisiesto(año:int) -> bool:
 
 def peso_pino(altura:float) -> float:
     if altura <= 3:
-        return 300 * altura #hacerlo usando min y max
+        return 300 * altura 
     else:
         return 900 + 200 * (altura - 3)
-    
+
+def peso_pino2(altura:float) -> float:
+    return min(altura,3) * 300 + max(0,altura-3) * 200 #otra forma de hacerlo usando min y max
+
+
 def es_peso_util(peso:float) -> bool:
     return 400 <= peso <= 1000
 
 def sirve_pino(altura:float) -> bool:
     return es_peso_util(peso_pino(altura))
 
+
+# EJERCICIO 5------------------------------------------------------------------------
+
+def el_rango(numero:int) -> None:
+    if numero < 5:
+        print("Menor a 5")
+    if 10 <= numero <= 20:
+        print("Entre 10 y 20")
+    if numero > 20:
+        print("Mayor a 20")
+
+def vacaciones(edad:int,sexo:str) -> str:
+    if edad < 18 or edad >= 65 and sexo == "M" or edad >= 60 and sexo == "F":
+        return "Te vas de vacaciones"
+    else:
+        return "Agarra la pala"
+    
+
+#EJERCICIO 6-----------------------------------------------------------
+
+def imprimir_1_10()-> None:
+ x = 1
+ while x <= 10: 
+     print(x)
+ x += 1
+
+def imprimir_pares_10_40()-> None:
+    x = 10
+    while x <= 40:
+        print(x)
+        x += 2
+    
+def imprimir_eco_10_veces()-> None:
+    i = 1
+    while i <= 10:
+        print("Eco")
+        i += 1
+
+def cuenta_regresiva(n:int) -> None:
+    while n >= 1:
+        print(n)
+        n -= 1
+    print("DESPEGUE")
+
+def viaje_en_el_tiempo(año_partida:int,año_llegada:int) -> None:
+    while año_partida > año_llegada:
+        print ("Viajó un año al pasado. Estamos en el año: " + str(año_partida - 1))
+        año_partida -= 1
+
+def viaje_tiempo_aridtoteles(año_partida:int) -> None:
+    while año_partida >= -364:
+        print ("Viajó 20 años al pasado. Estamos en el año: " + str(año_partida - 20))
+        año_partida -= 20
+
+
+# EJERCICIO 7-----------------------------------------------------------------------------
+
+def imprimir_1_10_7()-> None:
+    for n in range (1,10+1,1):
+        print(n)
+
+def imprimir_pares_10_40_7() -> None:
+    for n in range(10,40+1,2):
+        print(n)
+
+def imprimir_eco_10veces_7()-> None:
+    for i in range (1,10+1,1):
+        print("Eco")
+
+def cuenta_regresiva_7(n:int)-> None:
+    for i in range (n,1-1,-1):
+        print(i)
+    print("DESPEGUE")
+
+def viaje_tiempo_7(año_partida:int,año_llegada:int)-> None:
+    for n in range(año_partida -1, año_llegada-1, -1):
+        print("Viajó 1 año al pasado. Estamos en el año: " + str(n))
+    
+def viaje_aristoteles_7(año_partida:int) -> None:
+    for n in range (año_partida - 20, -384, -20):
+        print("Viajó 20 años al pasado. Estamos en el año: " + str(n))
 
 # COSAS/APUNTES COPIADOS DE LA CLASE
 x:int = peso_pino(10) 
@@ -85,3 +170,7 @@ def esmultiplo(a:int,b:int):
     res:bool = (a % b == 0) # Se puede definir el resultado, sin nesecidad de un return.
 
 # Se puede meter un if dentro del else como si fuesen guardas.
+
+'''comentar mucho codigo'''
+
+'''completar ej 5(esta en la pc)'''
