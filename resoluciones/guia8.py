@@ -6,7 +6,6 @@ def imprimir_archivo(nombre_archivo:str) -> int:
     print(contenido)
 
 #1.1
-    
 def contar_lineas(nombre_archivo:str) -> int:
     archivo = open(nombre_archivo)
     lineas:int = 0
@@ -35,7 +34,7 @@ def lista_palabras(linea:str) -> str:
     for l in linea:
          if l != ' ' and l != '\n':
               palabraActual += l
-         elif palabraActual != ' ':
+         else:
               misPalabras.append(palabraActual)
               palabraActual = ''
     if palabraActual != '':
@@ -45,38 +44,268 @@ def lista_palabras(linea:str) -> str:
 
 #1.3
 def cantidad_apariciones(nombre_archivo:str, palabra:str) -> int:
-
     archivo = open(nombre_archivo)
     contador:int = 0
-    linea = archivo.readline()
 
-
-    while linea != '':
-         for i in range(len(linea)):
-              if palabra == linea[i]:
-                   contador += 1
-         linea = archivo.readline()
-    
+    for linea in archivo: 
+         contador += cuantas_repeticiones_palabra_en_linea(linea, palabra)
     archivo.close()
     return contador
 
-#arreglar esta
+def cuantas_repeticiones_palabra_en_linea(linea:str, s:str) -> int:
+    res = 0
+    l = lista_palabras(linea)
 
+    for palabra in l:
+         if palabra == s:
+              res += 1       
+    return res
+              
 
+#EJERCICIO 2------------------------------------------------------------------------
 
+def clonar_sin_comentarios(nombre_archivo:str) -> None:
+    archivo = open(nombre_archivo, "r", encoding = 'UTF-8')
+    nuevas_lineas:[str] = []
+
+    for linea in archivo:
+         
+         if linea[0] != '#' and linea[0] != ' ':
+              nuevas_lineas.append(linea)
+
+         elif linea[0] == ' ':
+              if sacar_espacios(linea)[0] != '#':
+                      nuevas_lineas.append(linea)
+     
+     
+
+    archivo_sin_comentarios = open("archivo-sin-comentarios.txt", 'w')
+    archivo_sin_comentarios.writelines(nuevas_lineas)
     
+    archivo.close()
+    archivo_sin_comentarios.close()
+    return
+    #for l in nuevas_lineas:
+         #archivo_sin_comentarios.write(l) #Otra forma de escribir las líneas sin usar writelines()
+
+
+def sacar_espacios(linea:str) -> str:
+    res = ""
+    for letra in linea:
+         if letra != ' ':
+              res += letra
+    return res
+
+
+#EJERCICIO 3---------------------------------------------------------------------------
+    
+def invertir_lineas(nombre_archivo:str) -> None:
+     archivo = open(nombre_archivo)
+     lineas = archivo.readlines()
+     archivo.close()
+     lineas = invertir_lista(lineas)
+     reverso = open("reverso.txt", "w", encoding ='UTF-8')
+     reverso.writelines(lineas)
+     reverso.close()
+     return
+
+def invertir_lista(lineas:[str]) -> [str]:
+     res:[str] = []
+     i = len(lineas) - 1
+     while i >= 0:
+          res.append(lineas[i])
+          i -= 1
+     return res
+
+#EJERCICIO 4----------------------------------------------------------------------
+
+def agregar_frase_al_final(nombre_archivo:str, frase:str) -> None:
+     archivo = open(nombre_archivo, "a", encoding = 'UTF-8')
+     archivo.write(frase)
+     archivo.close()
+     return
+
+def agregar_frase_al_final2(nombre_archivo:str, frase:str) -> None:
+     archivo = open(nombre_archivo, "r", encoding = 'UTF-8')
+     lineas = archivo.readlines()
+     archivo.close()
+     lineas += frase
+     archivo = open(nombre_archivo, "w", encoding = 'UTF-8')
+     archivo.writelines(lineas)
+     archivo.close()
+     return
+
+
+#EJERCICIO 5----------------------------------------------------------------------
+
+def agregar_frase_al_principio(nombre_archivo:str, frase:str) -> None:
+     archivo = open(nombre_archivo, "r", encoding = 'UTF-8')
+     lineas = archivo.readlines()
+     archivo.close()
+     lineas_nuevas:[str] = [frase]
+     lineas_nuevas += lineas
+     archivo = open(nombre_archivo, "w", encoding = 'UTF-8')
+     archivo.writelines(lineas_nuevas)
+     archivo.close()
+     return
+
+
+#EJERCICIO 6----------------------------------------------------------------------
+
+def lista_palabras_de_archivo(nombre_archivo:str):
+     archivo = open(nombre_archivo, "b")
+     lineas:[str] = archivo.readlines()
+     res:[str] = []
+     archivo.close()
+
+     for linea in lineas:
+          res.append(palabras_legibles(linea))
+     return res
+
+def palabras_legibles(linea:str) -> [str]:
+     res:[str] = []
+     for palabra in letra:
+          if caracteres_validos(palabra):
+               res.append(palabra)
+     return res
+
+def caracteres_validos(palabra:str) -> bool:
+     res:bool = False
+     for letra in palabra:
+          if letra == '-' or letra == ' ':
+               res = True
+          elif 'a' <= letra and letra <= 'z' or 'A' <= letra and letra <= 'Z' or 0 <= letra and letra <= 9 :
+               res = True
+     return res
+
+#preguntar por qué no me funciona esta auxiliar cuando le tiro un str con caracteres especiales.
+# si cuando tiro en la terminal 'a' >= '$' me devuelve True ? CORREGIR
+
+
+     
+#EJERCICIO 7--------------------------------------------------------------
+
+def calcular_promedio_por_estudiante(nombre_archivo_notas:str, nombre_archivo_promedios:str) -> None:
+     archivo = open(nombre_archivo_notas, "r", encoding = 'UTF-8')
+     lineas = archivo.readlines()
+     archivo.close()
+     linea_nueva:str = ""
+     res = []
+
+
+     for linea in lineas:
+          linea_ordenadas:[str] = split_linea_csv(linea)
+          lu = linea_ordenadas[0] 
+          linea_nueva += lu + "," + str(promedio_estudiante(nombre_archivo_notas, lu)) + '\n'
+
+          if not(pertenece1(res, linea_nueva)):
+               res.append(linea_nueva)
+          linea_nueva = ""
+     
+     archivo_destino = open(nombre_archivo_promedios, "w", encoding = 'UTF-8')
+     archivo_destino.writelines(res)
+     archivo_destino.close()
+     print(res)
+     print(lineas)
+     return
+
+def pertenece1(s:list, e) -> bool: 
+    i:int = 0 
+    while i < len(s):
+        if s[i] == e:
+            return True
+        i += 1
+    return False
+
+
+def promedio_estudiante(nombre_archivo:str, lu:str) -> float:
+     archivo = open(nombre_archivo, "r", encoding = 'UTF-8')
+     lineas:[str] = archivo.readlines()
+     archivo.close()
+     sumatoria_notas:float = 0
+     cantidad_notas:int = 0
+
+     for linea in lineas:
+          l = split_linea_csv(linea) 
+          if l[0] == lu:
+               sumatoria_notas += float(l[3])
+               cantidad_notas += 1
+
+     return (sumatoria_notas / cantidad_notas) 
+
+
+def split_linea_csv(linea:str) -> [str]:
+     elemento = '' 
+     res:[str] = []
+
+     for c in linea:
+          if c != ',' and c != '\n':
+               elemento += c
+          else:
+               res.append(elemento)
+               elemento = ''
+
+     if elemento != '':
+          res.append(elemento)
+
+     return res
+
+
+#EJERCICIO 8------------------------------------------------------PILAS!!!!!!!!!!
+
+from queue import LifoQueue as Pila
+import random
+
+def generar_nros_azar(cantidad:int, desde:int, hasta:int) -> Pila:
+     p = Pila()
+     n = cantidad
+     while n > 0:
+          nro:int = random.randint(desde, hasta)
+          p.put(nro)
+          n -= 1
+     print(p.queue)
+
+
+#EJERCICIO 9----------------------------------------------------------------
+     
+def cantidad_elementos_pila(p:Pila) -> int:
+     res:int = 0
+     copia:Pila = Pila()
+
+     while not p.empty():
+          copia.put(p.get())
+     
+     while not copia.empty():
+          copia.get()
+          res += 1
+     
+     while not copia.empty():
+          p.put(copia.get())
+
+     return res
+
+
+mi_pilita:Pila = generar_nros_azar(5, 1, 10)
+print(mi_pilita.queue)
+print(mi_pilita.empty())
+print(cantidad_elementos_pila(mi_pilita))
+
+# porque''''???????? preguntar porqué no me funciona el empty()
 
 
 
-    ''' 
+
+
+
+''' 
     Probar ejecuar en terminal:
     archivo = open("miarchivo.txt")
     contenido = archivo.read()
     contenido
     print(contenido)
-    --¿Què pasa con los saltos de línea?
+    --¿Qué pasa con los saltos de línea?
     archivo.close()
-    Hay que cerrarlo y volver a abrirlo para leerlo múltiplesz veces
-    Si no lo cierro puede tener problemas
+    Hay que cerrarlo y volver a abrirlo para leerlo múltiples veces
+    Si no lo cierro puedo tener problemas
     
     '''
