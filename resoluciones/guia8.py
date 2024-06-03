@@ -152,6 +152,7 @@ def agregar_frase_al_principio(nombre_archivo:str, frase:str) -> None:
 
 #EJERCICIO 6----------------------------------------------------------------------
 
+
 def lista_palabras_de_archivo(nombre_archivo:str):
      archivo = open(nombre_archivo, "b")
      lineas:[str] = archivo.readlines()
@@ -174,15 +175,16 @@ def caracteres_validos(palabra:str) -> bool:
      for letra in palabra:
           if letra == '-' or letra == ' ':
                res = True
-          elif 'a' <= letra and letra <= 'z' or 'A' <= letra and letra <= 'Z' or 0 <= letra and letra <= 9 :
+          elif 'a' <= letra and letra <= 'z' or 'A' <= letra and letra <= 'Z' or '0' <= letra and letra <= '9' :
                res = True
      return res
 
 #preguntar por qué no me funciona esta auxiliar cuando le tiro un str con caracteres especiales.
 # si cuando tiro en la terminal 'a' >= '$' me devuelve True ? CORREGIR
+print(caracteres_validos("jhcvAAVHJGVFJ   ---"))
+print(caracteres_validos("jhcvAAVH$$$$???JGVFJ   ---"))     
 
 
-     
 #EJERCICIO 7--------------------------------------------------------------
 
 def calcular_promedio_por_estudiante(nombre_archivo_notas:str, nombre_archivo_promedios:str) -> None:
@@ -249,52 +251,6 @@ def split_linea_csv(linea:str) -> [str]:
           res.append(elemento)
 
      return res
-
-
-#EJERCICIO 8------------------------------------------------------PILAS!!!!!!!!!!
-
-from queue import LifoQueue as Pila
-import random
-
-def generar_nros_azar(cantidad:int, desde:int, hasta:int) -> Pila:
-     p = Pila()
-     n = cantidad
-     while n > 0:
-          nro:int = random.randint(desde, hasta)
-          p.put(nro)
-          n -= 1
-     print(p.queue)
-
-
-#EJERCICIO 9----------------------------------------------------------------
-     
-def cantidad_elementos_pila(p:Pila) -> int:
-     res:int = 0
-     copia:Pila = Pila()
-
-     while not p.empty():
-          copia.put(p.get())
-     
-     while not copia.empty():
-          copia.get()
-          res += 1
-     
-     while not copia.empty():
-          p.put(copia.get())
-
-     return res
-
-
-mi_pilita:Pila = generar_nros_azar(5, 1, 10)
-print(mi_pilita.queue)
-print(mi_pilita.empty())
-print(cantidad_elementos_pila(mi_pilita))
-
-# porque''''???????? preguntar porqué no me funciona el empty()
-
-
-
-
 
 
 ''' 
