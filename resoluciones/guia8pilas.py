@@ -59,7 +59,7 @@ def cantidad_elementos_pila(p:Pila) -> int:
 
 mi_pilita:Pila = generar_nros_azar_pila(5, 1, 10)
 print(de_pila_a_lista(mi_pilita))
-print(cantidad_elementos_pila(mi_pilita))
+#print(cantidad_elementos_pila(mi_pilita))
 
 
 #EJERCICIO 10---------------------------------------------------------------
@@ -100,14 +100,14 @@ def formula_bien_balanceada(formula: str) -> bool:
 
     return n == 0
             
-print(
+'''print(
     formula_bien_balanceada("3*(5*5)-(5-4)"),
     formula_bien_balanceada("7((3/7)"),
     formula_bien_balanceada("(10*(-1)))"),
     formula_bien_balanceada("(4*(-1)))"),
     formula_bien_balanceada("))9+7((")
 )
-
+'''
 #EJERCICIO 12-----------------------------------------------------------------
 
 def evaluar(formula: str) -> int:
@@ -120,8 +120,8 @@ def evaluar(formula: str) -> int:
         if i != ' ' and i != '+' and i != '-' and i != '*' and i != '/' :
             operando_actual += i
 
-        elif i == ' ':
-            numero = float(operando_actual) #Preguntar por qué no puedo convertir str a float
+        elif i == ' ' and operando_actual != "":
+            numero = float(operando_actual) 
             res.put(numero)
             operando_actual = ""
         
@@ -137,5 +137,5 @@ def evaluar(formula: str) -> int:
     return res.get()
 
 
+#print(evaluar("3 4 + 5 * 2 -"))
 
-print(float("45"))
