@@ -1,5 +1,5 @@
 
-#EJERCICIO 13------------------------------------------------COLAS!!!
+#EJERCICIO 13------------------------------------------------COLAS
 
 import random
 from queue import Queue as Cola
@@ -39,6 +39,7 @@ def invertida(l:[int]) -> [int]:
 
 mi_colita = generar_nros_al_azar_cola(5, 1, 10)
 print(de_cola_a_lista(mi_colita))
+#función para imprimirme la cola
 
 #EJERCICIO 14----------------------------------------------------------
 
@@ -113,5 +114,87 @@ def armar_secuencia_bingo2() -> Cola(int):
         secuencia.put(elemento)
     return secuencia
 
-print(de_cola_a_lista(armar_secuencia_bingo2()))
+#print(de_cola_a_lista(armar_secuencia_bingo2()))
 
+def jugar_carton_de_bingo(carton:[int], bolillero:Cola(int)) -> int:
+    res:int = 0
+    n:int = len(carton)
+    while n > 0:
+        bolilla:int = bolillero.get()
+        if pertenece1(carton, bolilla): 
+            n -= 1
+        res += 1
+    return res 
+
+    
+
+#b = armar_secuencia_bingo2()
+#print(de_cola_a_lista(b))
+#mi_carton = [1, 2, 3, 4]
+#print(jugar_carton_de_bingo(mi_carton, b))
+
+
+#EJERCICIO 17------------------------------------------------------------------
+
+def n_pacientes_urgentes1(c:Cola([int,str,str])) -> int:
+    lista_de_espera:[(int, str, str)] = []
+
+    while not c.empty():
+        lista_de_espera.append(c.get())
+    
+    for terna in lista_de_espera:
+        c.put(terna)
+
+    res:int = 0
+    for terna in lista_de_espera:
+        if terna[0] == 1 or terna[0] == 2 or terna[0] == 3:
+            res += 1
+
+    return res
+
+# Se puede hacer más facil de esta forma sin necesidad de definir una lista
+# Pero tener en cuenta de que así modifica el parámetro de entrada (cola)
+
+def n_pacientes_urgentes2(c: Cola((int,str,str))) -> int:
+    res:int = 0
+    while not c.empty():
+        terna = fila.get()
+        if terna[0] == 1 or terna[0] == 2 or terna[0] ==  3:
+            res += 1
+    return res
+
+
+#EJERCICIO 18------------------------------------------------------------
+
+def atencion_a_clientes(c:Cola((str,int,bool,bool))) -> Cola((str,int,bool,bool)):
+
+    fila:list[(str,int,bool,bool)] = []
+    prioridad:list[(str,int,bool,bool)] = []
+    preferencial:list[(str,int,bool,bool)] = []
+    notiene:list[(str,int,bool,bool)] = []
+
+    while not c.empty():
+        cliente = c.get()
+        fila.append(cliente)
+
+    for i in fila:
+        c.put(i)
+    
+    for cliente in fila:
+        if cliente[2]:
+            prioridad.append(cliente)
+        elif cliente[3]:
+            preferencial.append(cliente)
+        else:
+            notiene.append(cliente)
+
+    lista_final:list[(str,int,bool,bool)] = prioridad + preferencial + notiene
+    cola_final:Cola((str,int,bool,bool)) = Cola()
+
+    for cliente in lista_final:
+        cola_final.put(cliente)
+
+    return cola_final
+    
+
+    
