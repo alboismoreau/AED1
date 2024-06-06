@@ -179,8 +179,7 @@ def caracteres_validos(palabra:str) -> bool:
                res = True
      return res
 
-#preguntar por qué no me funciona esta auxiliar cuando le tiro un str con caracteres especiales.
-# si cuando tiro en la terminal 'a' >= '$' me devuelve True ? CORREGIR
+
 print(caracteres_validos("jhcvAAVHJGVFJ   ---"))
 print(caracteres_validos("jhcvAAVH$$$$???JGVFJ   ---"))     
 
