@@ -165,7 +165,7 @@ def lista_palabras_de_archivo(nombre_archivo:str):
 
 def palabras_legibles(linea:str) -> [str]:
      res:[str] = []
-     for palabra in letra:
+     for palabra in linea:
           if caracteres_validos(palabra):
                res.append(palabra)
      return res
