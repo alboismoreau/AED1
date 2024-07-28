@@ -39,7 +39,7 @@ def invertida(l:[int]) -> [int]:
 
 mi_colita = generar_nros_al_azar_cola(5, 1, 10)
 print(de_cola_a_lista(mi_colita))
-#función para imprimirme la cola
+#función para imprimir colas
 
 #EJERCICIO 14----------------------------------------------------------
 
@@ -107,7 +107,7 @@ def armar_secuencia_bingo1() -> Cola(int):  # fijarse si hay una implementacion 
 
 def armar_secuencia_bingo2() -> Cola(int):
     secuencia: Cola = Cola()
-    elementos:list(int) = list(range(100)) # Pero se puede usar range()? igualmente sería una lista del 0 al 99
+    elementos:list(int) = list(range(100)) 
     random.shuffle(elementos)
 
     for elemento in elementos:
